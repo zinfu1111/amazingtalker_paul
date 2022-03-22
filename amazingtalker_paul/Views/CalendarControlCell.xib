@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="d51-yd-yfd" customClass="CalendarContentCell" customModule="amazingtalker_paul" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="69.5"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d51-yd-yfd" id="zOq-M3-wQp">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="69.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VhZ-45-AW7">
+                        <rect key="frame" x="0.0" y="10" width="414" height="49.5"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-ao-5hK">
+                                <rect key="frame" x="0.0" y="7" width="35" height="35.5"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="&lt;"/>
+                                <buttonConfiguration key="configuration" style="plain" title="&lt;">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="18"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="preWeek:" destination="d51-yd-yfd" eventType="touchUpInside" id="E1c-CO-TyV"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0OP-TP-jcl">
+                                <rect key="frame" x="112.5" y="0.5" width="189" height="48.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022/03/20-03/26" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tu4-WG-xnv">
+                                        <rect key="frame" x="0.0" y="0.0" width="189" height="26"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*時間以 台灣時間(GMT+8:00)顯示" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cb5-KN-ZwR">
+                                        <rect key="frame" x="0.0" y="34" width="189" height="14.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cb2-Bt-hHf">
+                                <rect key="frame" x="379" y="7" width="35" height="35.5"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="&gt;"/>
+                                <buttonConfiguration key="configuration" style="plain" title="&gt;">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="18"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="nextWeek:" destination="d51-yd-yfd" eventType="touchUpInside" id="0pn-9V-kka"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VhZ-45-AW7" firstAttribute="leading" secondItem="zOq-M3-wQp" secondAttribute="leading" id="VGY-QK-0Eb"/>
+                    <constraint firstItem="VhZ-45-AW7" firstAttribute="top" secondItem="zOq-M3-wQp" secondAttribute="top" constant="10" id="XmF-XL-sXA"/>
+                    <constraint firstAttribute="trailing" secondItem="VhZ-45-AW7" secondAttribute="trailing" id="jWH-0T-Tdx"/>
+                    <constraint firstAttribute="bottom" secondItem="VhZ-45-AW7" secondAttribute="bottom" constant="10" id="z7W-OM-u1q"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dateRangeLabel" destination="tu4-WG-xnv" id="sR1-UI-Uro"/>
+                <outlet property="timezoneLabel" destination="cb5-KN-ZwR" id="msE-W1-vtq"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="94"/>
+        </tableViewCell>
+    </objects>
+</document>
