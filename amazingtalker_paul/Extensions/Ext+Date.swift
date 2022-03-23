@@ -25,26 +25,15 @@ extension Date {
         
         let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: self)
         let weekday = dateComponents.weekday!
-        switch (weekday) {
-        case 1:
-            return "日"
-        case 2:
-            return "一"
-        case 3:
-            return "二"
-        case 4:
-            return "三"
-        case 5:
-            return "四"
-        case 6:
-            return "五"
-        case 7:
-            return "六"
-        default:
-            return ""
-        }
+        
+        return WeekDay(rawValue: weekday)?.getText() ?? "一"
     }
     
+    func weekDay() -> WeekDay {
+        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: self)
+        let weekday = dateComponents.weekday!
+        return WeekDay(rawValue: weekday) ?? .Sunday
+    }
     
     func getFormatter(format:String) -> String {
         

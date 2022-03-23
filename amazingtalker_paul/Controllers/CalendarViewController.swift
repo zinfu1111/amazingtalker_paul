@@ -10,8 +10,9 @@ import UIKit
 class CalendarViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var contentView:CalendarContentCell?
     var viewModel:CalendarViewModel!
+    var dayCellTabelViewModel = [CalendarTimeViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class CalendarViewController: UIViewController {
         viewModel.completionUpdateUI = {
             DispatchQueue.main.async {[weak self] in
                 guard let weakSelf = self else { return }
+                weakSelf.dayCellTabelViewModel = weakSelf.viewModel.generalTimeViewModel()
                 weakSelf.setupTableView()
             }
         }
@@ -36,6 +38,19 @@ class CalendarViewController: UIViewController {
         tableView.register(UINib(nibName: "\(CalendarContentCell.self)", bundle: nil), forCellReuseIdentifier: "\(CalendarContentCell.self)")
         tableView.dataSource = self
         tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {[weak self] in
+            
+            let today = Date()
+            guard let weakSelf = self,let contentView = weakSelf.contentView else { return }
+            
+            contentView.activityIndicatorView.isHidden = true
+            if weakSelf.viewModel.dates.first(where: {$0.getFormatter(format: DateTimeFormatter.YearDate) == today.getFormatter(format: DateTimeFormatter.YearDate)}) != nil {
+                let index = IndexPath(row: today.weekDay().rawValue, section: 0)
+                contentView.collectionView.scrollToItem(at: index, at: .right, animated: false)
+            }
+            
+            
+        }
     }
 
 }
@@ -60,8 +75,8 @@ extension CalendarViewController {
     
     func configControlView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let controlCell = tableView.dequeueReusableCell(withIdentifier: "\(CalendarControlCell.self)", for: indexPath) as! CalendarControlCell
-        controlCell.dateRangeLabel.text = "\(viewModel.dates.first!.getFormatter(format: "YYYY/MM/dd"))-\(viewModel.dates.last!.getFormatter(format: "MM/dd"))"
-        controlCell.timezoneLabel.text = "*時間以 \(TimeZone.current.identifier)時間 \(TimeZone.current.abbreviation()!)顯示"
+        controlCell.dateRangeLabel.text = "\(viewModel.dates.first!.getFormatter(format: DateTimeFormatter.YearDate))-\(viewModel.dates.last!.getFormatter(format: DateTimeFormatter.MonthAndDay))"
+        controlCell.timezoneLabel.text = "*時間以 \(TimeZone.current.identifier)時間 (\(TimeZone.current.abbreviation()!))顯示"
         controlCell.preWeekButton.isEnabled = !viewModel.lockPreWeek
         controlCell.preWeekClousure = {[weak self] in
             guard let weakSelf = self,!weakSelf.viewModel.lockPreWeek else { return }
@@ -78,24 +93,25 @@ extension CalendarViewController {
         let contentCell = tableView.dequeueReusableCell(withIdentifier: "\(CalendarContentCell.self)", for: indexPath) as! CalendarContentCell
         contentCell.collectionView.register(UINib(nibName: "\(CalendarDayCell.self)", bundle: nil), forCellWithReuseIdentifier: "\(CalendarDayCell.self)")
         contentCell.collectionView.collectionViewLayout = UICollectionViewLayout()
+        contentCell.activityIndicatorView.isHidden = false
         contentCell.dataSource = CollectionViewDataSource(cellIdentifier: "\(CalendarDayCell.self)", items: viewModel.dates, configCell: configDayCell)
         contentCell.collectionView.dataSource = contentCell.dataSource
         contentCell.collectionView.reloadData()
-        
+        self.contentView = contentCell
         return contentCell
     }
     
     func configDayCell(dayCell:CalendarDayCell,day:Date) {
+        
+        let viewModels = viewModel.generalTimeViewModel().filter({$0.time.getFormatter(format: DateTimeFormatter.YearDate) == day.getFormatter(format: DateTimeFormatter.YearDate)}).sorted { $0.time.compare($1.time) == .orderedAscending }
+        
         dayCell.weekDayLabel.text = day.weekDayText()
-        dayCell.dayLabel.text = day.getFormatter(format: "d")
+        dayCell.dayLabel.text = day.getFormatter(format: DateTimeFormatter.Day)
         
         dayCell.weekDayLabel.textColor = viewModel.isPast(day: day) ? .lightGray : .black
         dayCell.dayLabel.textColor = viewModel.isPast(day: day) ? .lightGray : .black
         
         dayCell.tableView.register(UINib(nibName: "\(CalendarTimeCell.self)", bundle: nil), forCellReuseIdentifier: "\(CalendarTimeCell.self)")
-        let viewModels = generalTimeViewModel().filter({$0.time.getFormatter(format: "YYYY/MM/dd") == day.getFormatter(format: "YYYY/MM/dd")}).sorted { time1, time2 in
-            return time1.time.compare(time2.time) == .orderedAscending
-        }
         
         dayCell.dataSource = TableViewDataSource(cellIdentifier: "\(CalendarTimeCell.self)", items: viewModels, configCell: self.configTimeCell)
         dayCell.tableView.dataSource = dayCell.dataSource
@@ -103,34 +119,8 @@ extension CalendarViewController {
     }
     
     func configTimeCell(timeCell:CalendarTimeCell,viewModel:CalendarTimeViewModel) {
-        timeCell.timeLabel.text = viewModel.time.getFormatter(format: "HH:mm")
+        timeCell.timeLabel.text = viewModel.time.getFormatter(format: DateTimeFormatter.HourMin)
         timeCell.timeLabel.textColor = viewModel.isAvailable ? .green : .lightGray
     }
     
-    ///傳入Day內的Range時間
-    func generalTimeViewModel() -> [CalendarTimeViewModel] {
-        let availableTimes = self.viewModel.scheduleData.available.map { item -> TimeRange in
-            var data = item
-            data.isAvailable = true
-            return data
-        }
-        let bookedTimes = self.viewModel.scheduleData.booked.map { item -> TimeRange in
-            var data = item
-            data.isAvailable = false
-            return data
-        }
-        let times = availableTimes+bookedTimes
-        
-        var res = [CalendarTimeViewModel]()
-        
-        for time in times {
-            let endTime = time.end.ISOStringToDate()
-            var currentTime = time.start.ISOStringToDate()
-            while currentTime.compare(endTime) != .orderedSame {
-                res.append(CalendarTimeViewModel(isAvailable: time.isAvailable!, time: currentTime))
-                currentTime = currentTime.addMin(30)
-            }
-        }
-        return res
-    }
 }

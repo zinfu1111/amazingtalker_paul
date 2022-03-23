@@ -38,11 +38,10 @@ class CalendarViewModel: NSObject {
     }
     
     func isPast(day:Date) -> Bool {
-        let formate = "YYYY/MM/dd"
-        let todayFormatter = Date().getFormatter(format: formate)
-        let today = todayFormatter.toDate(with: formate)
-        let targetFormatter = day.getFormatter(format: formate)
-        let target = targetFormatter.toDate(with: formate)
+        let todayFormatter = Date().getFormatter(format: DateTimeFormatter.YearDashDate)
+        let today = todayFormatter.toDate(with: DateTimeFormatter.YearDashDate)
+        let targetFormatter = day.getFormatter(format: DateTimeFormatter.YearDashDate)
+        let target = targetFormatter.toDate(with: DateTimeFormatter.YearDashDate)
         
         switch target.compare(today) {
         case .orderedAscending:
@@ -54,7 +53,7 @@ class CalendarViewModel: NSObject {
     
     func initWeekDate() {
         let today = Date()
-        dates = generalWeek(with: today)
+        dates = getWeekDates(with: WeekDay.Sunday.rawValue,by: today)
     }
     
     func preWeekDates() {
@@ -63,7 +62,7 @@ class CalendarViewModel: NSObject {
         
         let currentFirstDate = dates.first!
         let preWeekLastDay = currentFirstDate.addDay(-1)
-        dates = generalWeek(with: preWeekLastDay)
+        dates = getWeekDates(with: WeekDay.Sunday.rawValue,by: preWeekLastDay)
     }
     
     func nextWeekDates() {
@@ -71,23 +70,54 @@ class CalendarViewModel: NSObject {
         
         let currentLastDate = dates.last!
         let nextWeekFirstDay = currentLastDate.addDay(1)
-        dates = generalWeek(with: nextWeekFirstDay)
+        dates = getWeekDates(with: WeekDay.Sunday.rawValue,by: nextWeekFirstDay)
     }
     
-    func generalWeek(with date:Date) -> [Date] {
+    
+    /// 取得傳入日期的當週資料
+    /// - Parameters:
+    ///   - firstWeekDay: 設定一週的第一天為星期幾
+    ///   - date: 傳入日期
+    /// - Returns: 一週的日期
+    func getWeekDates(with firstWeekDay:Int,by date:Date) -> [Date] {
         
-        var res = [Date]()
-        
+        //1.找出傳入日期是星期幾
         let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: date)
         let weekday = dateComponents.weekday!
-        let allWeekday = [1,2,3,4,5,6,7]
         
-        for item in allWeekday {
-            let addValue = item - weekday
-            let day = date.addDay(addValue)
-            res.append(day)
+        //2.與本週的第一天差幾天
+        let differenceFromFirstWeekDay = firstWeekDay - weekday
+        
+        //3.用傳入的日期加上差異天數找到第一天的日期
+        let firstWeekDate = date.addDay(differenceFromFirstWeekDay)
+        
+        var res = [Date]()
+        //4.一週有7天全部放到回傳的參數
+        for i in 0...6 {
+            let date = firstWeekDate.addDay(i)
+            res.append(date)
         }
         
+        return res
+    }
+    
+    
+    /// 將api的時間範圍以每半小時為單位取出後並賦予狀態
+    /// - Returns:時間資料
+    func generalTimeViewModel() -> [CalendarTimeViewModel] {
+        
+        let times = self.scheduleData.available+self.scheduleData.booked
+        
+        var res = [CalendarTimeViewModel]()
+        
+        for time in times {
+            let endTime = time.end.ISOStringToDate()
+            var currentTime = time.start.ISOStringToDate()
+            while currentTime.compare(endTime) != .orderedSame {
+                res.append(CalendarTimeViewModel(isAvailable: time.isAvailable ?? false, time: currentTime))
+                currentTime = currentTime.addMin(30)
+            }
+        }
         return res
     }
 }

@@ -35,4 +35,5 @@ class CollectionViewDataSource<CELL:UICollectionViewCell,T>: NSObject,UICollecti
         
         return cell
     }
+    
 }

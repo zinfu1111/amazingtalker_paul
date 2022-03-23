@@ -10,7 +10,7 @@ import UIKit
 class CalendarContentCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     var dataSource:CollectionViewDataSource<CalendarDayCell,Date>!
     
 }

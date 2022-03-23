@@ -25,7 +25,6 @@
 		9C4C1B8527EA485E002540A0 /* CalendarTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C4C1B8327EA485E002540A0 /* CalendarTimeCell.xib */; };
 		9C4C1B8727EA4C4F002540A0 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B8627EA4C4F002540A0 /* CalendarViewModel.swift */; };
 		9C4C1B8B27EA4D36002540A0 /* Ext+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B8A27EA4D36002540A0 /* Ext+Date.swift */; };
-		9C4C1B8D27EAA9D3002540A0 /* CalendarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B8C27EAA9D3002540A0 /* CalendarDataManager.swift */; };
 		9C4C1B9027EACAA5002540A0 /* UICollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B8F27EACAA5002540A0 /* UICollectionViewLayout.swift */; };
 		9C4C1B9227EAD37C002540A0 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B9127EAD37C002540A0 /* Schedule.swift */; };
 		9C4C1B9427EAD4D8002540A0 /* TimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1B9327EAD4D8002540A0 /* TimeRange.swift */; };
@@ -46,6 +45,8 @@
 		9C4C1BB927EAD70B002540A0 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAA27EAD70B002540A0 /* SessionDelegate.swift */; };
 		9C4C1BBB27EAEBE8002540A0 /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BBA27EAEBE8002540A0 /* Ext+String.swift */; };
 		9C4C1BBD27EAF52A002540A0 /* CalendarTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BBC27EAF52A002540A0 /* CalendarTimeViewModel.swift */; };
+		9C4C1BBF27EB88C5002540A0 /* DateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BBE27EB88C5002540A0 /* DateTimeFormatter.swift */; };
+		9C4C1BC127EB8F3E002540A0 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BC027EB8F3E002540A0 /* WeekDay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +70,6 @@
 		9C4C1B8327EA485E002540A0 /* CalendarTimeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarTimeCell.xib; sourceTree = "<group>"; };
 		9C4C1B8627EA4C4F002540A0 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		9C4C1B8A27EA4D36002540A0 /* Ext+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Date.swift"; sourceTree = "<group>"; };
-		9C4C1B8C27EAA9D3002540A0 /* CalendarDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDataManager.swift; sourceTree = "<group>"; };
 		9C4C1B8F27EACAA5002540A0 /* UICollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLayout.swift; sourceTree = "<group>"; };
 		9C4C1B9127EAD37C002540A0 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		9C4C1B9327EAD4D8002540A0 /* TimeRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRange.swift; sourceTree = "<group>"; };
@@ -90,6 +90,8 @@
 		9C4C1BAA27EAD70B002540A0 /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		9C4C1BBA27EAEBE8002540A0 /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		9C4C1BBC27EAF52A002540A0 /* CalendarTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTimeViewModel.swift; sourceTree = "<group>"; };
+		9C4C1BBE27EB88C5002540A0 /* DateTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeFormatter.swift; sourceTree = "<group>"; };
+		9C4C1BC027EB8F3E002540A0 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			children = (
 				9C4C1B9127EAD37C002540A0 /* Schedule.swift */,
 				9C4C1B9327EAD4D8002540A0 /* TimeRange.swift */,
+				9C4C1BC027EB8F3E002540A0 /* WeekDay.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,7 +198,7 @@
 		9C4C1B8E27EAB1E9002540A0 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9C4C1B8C27EAA9D3002540A0 /* CalendarDataManager.swift */,
+				9C4C1BBE27EB88C5002540A0 /* DateTimeFormatter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				9C4C1B7827EA43E9002540A0 /* CalendarViewController.swift in Sources */,
 				9C4C1BB127EAD70B002540A0 /* RestManager.swift in Sources */,
 				9C4C1BB327EAD70B002540A0 /* APIConfig.swift in Sources */,
+				9C4C1BC127EB8F3E002540A0 /* WeekDay.swift in Sources */,
 				9C4C1BAB27EAD70B002540A0 /* FormatParameterEncoder.swift in Sources */,
 				9C4C1BBB27EAEBE8002540A0 /* Ext+String.swift in Sources */,
 				9C4C1BB227EAD70B002540A0 /* DemoEndPoint.swift in Sources */,
@@ -340,6 +344,7 @@
 				9C4C1BB427EAD70B002540A0 /* NetworkRouter.swift in Sources */,
 				9C4C1B6E27EA4019002540A0 /* CalendarContentCell.swift in Sources */,
 				9C4C1BB027EAD70B002540A0 /* Network.swift in Sources */,
+				9C4C1BBF27EB88C5002540A0 /* DateTimeFormatter.swift in Sources */,
 				9C4C1BBD27EAF52A002540A0 /* CalendarTimeViewModel.swift in Sources */,
 				9C4C1B7D27EA456F002540A0 /* CollectionViewDataSource.swift in Sources */,
 				9C4C1B8727EA4C4F002540A0 /* CalendarViewModel.swift in Sources */,
@@ -350,7 +355,6 @@
 				9C4C1BB827EAD70B002540A0 /* EndPointType.swift in Sources */,
 				9C4C1B6727EA3FBE002540A0 /* CalendarControlCell.swift in Sources */,
 				9C4C1B7B27EA451E002540A0 /* TableViewDataSource.swift in Sources */,
-				9C4C1B8D27EAA9D3002540A0 /* CalendarDataManager.swift in Sources */,
 				9C4C1B9027EACAA5002540A0 /* UICollectionViewLayout.swift in Sources */,
 				9C4C1BB927EAD70B002540A0 /* SessionDelegate.swift in Sources */,
 				9C4C1BB527EAD70B002540A0 /* HttpTask.swift in Sources */,
