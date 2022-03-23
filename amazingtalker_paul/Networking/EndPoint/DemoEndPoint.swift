@@ -82,7 +82,6 @@ extension DemoEndPoint: EndPointType{
     
     var headers: HTTPHeaders? {
         let defaultHeader = [
-            "Authorization": "Bearer keyk9UtV73WZD5WkQ",
             "Content-Type": "application/json",
             "Charset": "utf-8",
             "CC-Type":"phone"

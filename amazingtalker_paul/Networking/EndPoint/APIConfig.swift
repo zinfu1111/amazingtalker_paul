@@ -14,5 +14,5 @@ enum Environment: String {
 }
 
 enum APIMethod: String {
-    case schedule = "/v1/guest/teachers/amy-estrada/schedule"
+    case schedule = "/v1/guest/teachers/justin-liu/schedule"
 }

@@ -28,7 +28,7 @@ class CalendarViewModel: NSObject {
     }
     
     func fetchData(with completionHandler:(()->Void)?) {
-        let startTime = self.dates.first!.addDay(-1).toTimezone()
+        let startTime = self.dates.first!.toTimezone()
         restManager.requestJSONDataByURL(.schedule, ["started_at":startTime], resType: Schedule.self) {[weak self] response, error in
             guard let self = self else { return }
             guard let response = response,error == nil else { return }

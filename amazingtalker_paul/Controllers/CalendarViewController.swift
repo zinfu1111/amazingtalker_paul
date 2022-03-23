@@ -93,7 +93,9 @@ extension CalendarViewController {
         dayCell.dayLabel.textColor = viewModel.isPast(day: day) ? .lightGray : .black
         
         dayCell.tableView.register(UINib(nibName: "\(CalendarTimeCell.self)", bundle: nil), forCellReuseIdentifier: "\(CalendarTimeCell.self)")
-        let viewModels = generalTimeViewModel().filter({$0.time.getFormatter(format: "YYYY/MM/dd") == day.getFormatter(format: "YYYY/MM/dd")})
+        let viewModels = generalTimeViewModel().filter({$0.time.getFormatter(format: "YYYY/MM/dd") == day.getFormatter(format: "YYYY/MM/dd")}).sorted { time1, time2 in
+            return time1.time.compare(time2.time) == .orderedAscending
+        }
         
         dayCell.dataSource = TableViewDataSource(cellIdentifier: "\(CalendarTimeCell.self)", items: viewModels, configCell: self.configTimeCell)
         dayCell.tableView.dataSource = dayCell.dataSource
@@ -101,13 +103,12 @@ extension CalendarViewController {
     }
     
     func configTimeCell(timeCell:CalendarTimeCell,viewModel:CalendarTimeViewModel) {
-        timeCell.timeLabel.text = viewModel.time.getFormatter(format: "hh:mm")
+        timeCell.timeLabel.text = viewModel.time.getFormatter(format: "HH:mm")
         timeCell.timeLabel.textColor = viewModel.isAvailable ? .green : .lightGray
     }
     
     ///傳入Day內的Range時間
     func generalTimeViewModel() -> [CalendarTimeViewModel] {
-        print(self.viewModel.scheduleData.booked.count)
         let availableTimes = self.viewModel.scheduleData.available.map { item -> TimeRange in
             var data = item
             data.isAvailable = true
@@ -119,20 +120,16 @@ extension CalendarViewController {
             return data
         }
         let times = availableTimes+bookedTimes
-        print("times",times.count)
+        
         var res = [CalendarTimeViewModel]()
         
         for time in times {
-            let endTime = time.end.ISOToDate()
-            var currentTime = time.start.ISOToDate()
-            print("start",currentTime,endTime)
+            let endTime = time.end.ISOStringToDate()
+            var currentTime = time.start.ISOStringToDate()
             while currentTime.compare(endTime) != .orderedSame {
-                print(currentTime,endTime)
-                currentTime = currentTime.addMin(30)
                 res.append(CalendarTimeViewModel(isAvailable: time.isAvailable!, time: currentTime))
-                
+                currentTime = currentTime.addMin(30)
             }
-            
         }
         return res
     }
