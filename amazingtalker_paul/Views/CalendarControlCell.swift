@@ -9,16 +9,17 @@ import UIKit
 
 class CalendarControlCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    @IBOutlet weak var dateRangeLabel: UILabel!
+    @IBOutlet weak var timezoneLabel: UILabel!
+    @IBOutlet weak var preWeekButton: UIButton!
     
+    var preWeekClousure = {}
+    var nextWeekClousure = {}
+    
+    @IBAction func preWeek(_ sender: Any) {
+        preWeekClousure()
+    }
+    @IBAction func nextWeek(_ sender: Any) {
+        nextWeekClousure()
+    }
 }

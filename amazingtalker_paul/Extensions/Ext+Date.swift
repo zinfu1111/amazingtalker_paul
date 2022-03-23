@@ -15,18 +15,17 @@ extension Date {
         return changeDay!
     }
     
-    func weeDay() -> String {
+    func addMin(_ value:Int) -> Date {
+        let today = self
+        let changeDay = Calendar.current.date(byAdding: .minute, value: value, to: today)
+        return changeDay!
+    }
+    
+    func weekDayText() -> String {
         
-        
-        let dataFormatter = DateFormatter()
-        dataFormatter.locale = Locale(identifier: "zh_Hant_TW")
-        dataFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
-        let stringDate = dataFormatter.string(from: self)
-
-        let calender = Calendar(identifier:Calendar.Identifier.gregorian)
-        let comps = (calender as NSCalendar?)?.components(NSCalendar.Unit.weekday, from: self)
-        
-        switch (comps?.weekday ?? 0) {
+        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: self)
+        let weekday = dateComponents.weekday!
+        switch (weekday) {
         case 1:
             return "日"
         case 2:
@@ -44,5 +43,24 @@ extension Date {
         default:
             return ""
         }
+    }
+    
+    
+    func getFormatter(format:String) -> String {
+        
+        let locale = NSLocale.current.languageCode
+        // Create Date Formatter
+        let dateFormatter = DateFormatter()
+        
+        // Set Date Format
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: locale!)
+        return dateFormatter.string(from: self)
+    }
+    
+    func toTimezone() -> String {
+        let dateFormatter = ISO8601DateFormatter()
+        let date = dateFormatter.string(from: self)
+        return date
     }
 }

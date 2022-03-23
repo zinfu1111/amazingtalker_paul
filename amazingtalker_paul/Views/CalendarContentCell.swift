@@ -9,13 +9,8 @@ import UIKit
 
 class CalendarContentCell: UITableViewCell {
 
-    @IBOutlet weak var dateRangeLabel: UILabel!
-    @IBOutlet weak var timezoneLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var dataSource:CollectionViewDataSource<CalendarDayCell,Date>!
     
-    @IBAction func preWeek(_ sender: Any) {
-    }
-    @IBAction func nextWeek(_ sender: Any) {
-    }
 }

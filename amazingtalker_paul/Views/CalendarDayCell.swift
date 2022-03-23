@@ -13,9 +13,16 @@ class CalendarDayCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var dataSource:TableViewDataSource<CalendarTimeCell,CalendarTimeViewModel>!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tableView.reloadData()
+    }
 }
